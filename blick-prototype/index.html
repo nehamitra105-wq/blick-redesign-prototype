@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blick Pickup Prototype</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ================= HEADER (shared) ================= -->
+<header id="siteHeader">
+  <div class="hdr-bar">
+    <div class="hdr-inner">
+      <a class="hdr-logo" data-go="home" aria-label="Blick home"><img src="assets/logo.svg" alt="BLICK"><sup>®</sup></a>
+      <form class="search" id="searchForm" autocomplete="off">
+        <input id="searchInput" type="text" placeholder="Ink in season" aria-label="Search">
+        <button class="search-btn" type="submit" aria-label="Search"><img src="assets/search.svg" alt=""></button>
+      </form>
+      <div class="hdr-actions">
+        <button class="store-btn" id="storeBtn" type="button">
+          <img id="storePin" src="assets/pin.svg" alt="">
+          <div id="storeLabel"><div class="t1">Select Store</div></div>
+        </button>
+        <a class="icon-btn" aria-label="Account"><img src="assets/account.svg" alt=""></a>
+        <a class="icon-btn" aria-label="Orders"><img src="assets/orders.svg" alt=""></a>
+        <a class="icon-btn" aria-label="Wishlist"><img src="assets/wishlist.svg" alt=""></a>
+        <a class="icon-btn cart hot" id="cartIcon" aria-label="Cart"><img src="assets/cart.svg" alt=""><span class="badge" id="cartBadge">1</span></a>
+      </div>
+    </div>
+  </div>
+  <nav class="dept">
+    <div class="dept-inner">
+      <div class="dept-list">
+        <div class="dept-item"><img src="assets/nav-paint.png" alt=""><span>PAINT</span></div>
+        <div class="dept-item"><img src="assets/nav-canvas.png" alt=""><span>CANVAS</span></div>
+        <div class="dept-item"><img src="assets/nav-brushes.png" alt=""><span>BRUSHES</span></div>
+        <div class="dept-item"><img src="assets/nav-drawing.png" alt=""><span>DRAWING</span></div>
+        <div class="dept-item"><img src="assets/nav-paper.png" alt=""><span>PAPER</span></div>
+        <div class="dept-item"><img src="assets/nav-easels.png" alt=""><span>EASELS</span></div>
+        <div class="dept-item"><img src="assets/nav-framing.png" alt=""><span>FRAMING</span></div>
+        <div class="dept-item"><img src="assets/nav-ceramics.png" alt=""><span>CERAMICS</span></div>
+        <div class="dept-item"><div class="dept-sq"><i></i><i></i><i></i><i></i></div><span>MORE</span></div>
+        <div class="dept-divider"></div>
+        <div class="dept-item"><div class="dept-az"><b>A-Z</b></div><span>BRANDS</span></div>
+        <div class="dept-item"><img src="assets/nav-new.png" alt=""><span>NEW</span></div>
+        <div class="dept-item"><img src="assets/nav-gifts.png" alt=""><span>GIFTS</span></div>
+        <div class="dept-item"><img src="assets/nav-deals.png" alt=""><span>DEALS</span></div>
+        <div class="dept-item"><img src="assets/nav-clearance.png" alt=""><span>CLEARANCE</span></div>
+      </div>
+      <div class="dept-fade"></div>
+      <button class="dept-next" aria-label="Scroll departments"><img src="assets/chevron-right-white.svg" alt=""></button>
+    </div>
+  </nav>
+</header>
+
+<!-- ================= STORE POPOVER ================= -->
+<div class="store-pop" id="storePop">
+  <!-- select store -->
+  <div class="card" id="spSelect">
+    <img class="caret" src="assets/caret-up.svg" alt="">
+    <div class="sp-pad">
+      <div class="eyebrow">Your store</div>
+      <div class="sp-title">Select Store</div>
+      <div class="sp-search"><input class="sp-input" style="width:196px" placeholder="Enter ZIP code, City, State"><button class="btn-outline-sm">Search</button></div>
+      <a class="use-loc hot"><img src="assets/locate.svg" alt=""><span class="u">Use my location</span></a>
+    </div>
+    <div class="sp-sec" style="padding-bottom:4px">
+      <div class="eyebrow">Nearby stores</div>
+      <div class="store-row">
+        <div class="store-head">
+          <div><div class="name">Savannah</div><div class="addr">318 E. Broughton St.<br>Savannah, GA 31401<br><span class="open">Open until 7PM</span></div></div>
+          <div class="dist">2.8 mi</div>
+        </div>
+        <div class="store-contact"><img src="assets/phone.svg" alt=""><div>(912) 234-0456<br>BlickonBroughton@dickblick.com<br>BlickBroughtonFraming@dickblick.com</div></div>
+        <div class="store-hours"><b>Mon-Sat: </b>10AM - 7PM<br><b>Sun:</b> 11AM - 5PM</div>
+        <button class="set-loc" id="setSavannah">Set location to this store</button>
+      </div>
+      <div class="store-row">
+        <div class="store-head">
+          <div><div class="name">Atlanta</div><div class="addr">878 Peachtree St. NE.<br>Atlanta, GA 30309<br><span class="open">Open until 6PM</span></div></div>
+          <div class="dist">246 mi</div>
+        </div>
+        <div class="store-contact"><img src="assets/phone.svg" alt=""><div>(404) 347-9119<br>BlickMidtown@dickblick.com<br>BlickMidtownFraming@dickblick.com</div></div>
+        <div class="store-hours"><b>Mon-Sat: </b>10AM - 6PM<br><b>Sun:</b> 12PM - 5PM</div>
+        <button class="set-loc">Set location to this store</button>
+      </div>
+    </div>
+  </div>
+  <!-- store selected -->
+  <div class="card" id="spSelected" hidden>
+    <img class="caret" src="assets/caret-up-2.svg" alt="">
+    <div class="sp-pad" style="display:flex;flex-direction:column;gap:2px">
+      <div class="eyebrow">Your store</div>
+      <div class="sp-title">Savannah, GA</div>
+      <div style="font-size:14px;padding-top:2px">318 E Broughton St</div>
+      <div style="font-size:14px;color:var(--green)">Open until 7PM</div>
+    </div>
+    <div class="sp-map">
+      <div class="map"><img class="bg" src="assets/store-map.png" alt=""><img class="pin" src="assets/map-pin.svg" alt="">
+        <div class="zoom"><img src="assets/zoom-in.svg" alt=""><img src="assets/zoom-out.svg" alt=""></div></div>
+    </div>
+    <div class="chips"><span class="chip-sm">Pick up today</span><span class="chip-sm">Delivery</span><span class="chip-sm">Framing</span></div>
+    <div class="sp-sec" style="padding-bottom:16px">
+      <div class="m" style="font-size:14px">Not your store?</div>
+      <div class="sp-search"><input class="sp-input" style="flex:1" placeholder="Enter ZIP code"><button class="btn-outline-sm">Search</button></div>
+      <a class="use-loc hot"><img src="assets/locate-2.svg" alt=""><span class="u">Use my location</span></a>
+    </div>
+    <div class="sp-nearby">
+      <div class="eyebrow">Nearby stores</div>
+      <div class="store-row">
+        <div class="store-head">
+          <div><div class="name">Atlanta</div><div class="addr">878 Peachtree St. NE.<br>Atlanta, GA 30309<br><span class="open">Open until 6PM</span></div></div>
+          <div class="dist">246 mi</div>
+        </div>
+        <div class="store-contact"><img src="assets/phone.svg" alt=""><div>(404) 347-9119<br>BlickMidtown@dickblick.com<br>BlickMidtownFraming@dickblick.com</div></div>
+      </div>
+    </div>
+    <div class="sp-done"><button class="btn-red" id="storeDone">Done</button></div>
+  </div>
+</div>
+
+<!-- ================= HOME ================= -->
+<section class="screen" data-screen="home">
+  <div class="promo" id="promo">10% Student Discount |&nbsp;<span class="u">Learn more</span>
+    <button class="x" id="promoClose" aria-label="Dismiss"><img src="assets/close-white.svg" alt=""></button></div>
+
+  <div class="deals">
+    <div class="deal" style="width:503.33px">
+      <img class="bg" src="assets/deal1-bg.png" alt=""><div class="shade" style="background:rgba(0,0,0,.45)"></div>
+      <h2>Fall clearance, 20-80% off</h2>
+      <div class="thumbs">
+        <div class="tb clip"><img src="assets/deal1-a.png" alt="" style="width:105px;height:132px;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-90deg)"></div>
+        <div class="tb"><img src="assets/deal1-b.png" alt="" style="width:102px;height:102px;left:9px;top:-1px"></div>
+        <div class="tb"><img src="assets/deal1-c.png" alt="" style="width:102px;height:102px;left:9px;top:-1px"></div>
+      </div>
+    </div>
+    <div class="deal" style="width:504.33px">
+      <img class="bg" src="assets/deal2-bg.png" alt=""><div class="shade" style="background:rgba(0,0,0,.26)"></div>
+      <h2>Winsor &amp; Newton, 45% off</h2>
+      <div class="thumbs" style="left:19px">
+        <div class="tb clip"><img src="assets/deal2-a.png" alt="" style="width:101px;height:101px;left:9px;top:-1px"></div>
+        <div class="tb"><img src="assets/deal2-b.png" alt="" style="width:97px;height:97px;left:11px;top:2px"></div>
+        <div class="tb" style="background:#f4f4f4"><img src="assets/deal2-c.png" alt="" style="width:101px;height:101px;left:9px;top:-1px"></div>
+      </div>
+    </div>
+    <div class="deal" style="width:504.33px">
+      <img class="bg" src="assets/deal3-bg.png" alt=""><div class="shade" style="background:rgba(0,0,0,.4)"></div>
+      <h2>Ink in season</h2>
+      <button class="next-deal" aria-label="Next deal"><img src="assets/next-deal.svg" alt=""></button>
+      <div class="thumbs" style="left:19px">
+        <div class="tb clip"><img src="assets/deal3-bg.png" alt="" style="width:123px;height:123px;left:-2px;top:-13px"></div>
+        <div class="tb"><img src="assets/deal3-b.png" alt="" style="width:43px;height:90px;left:39px;top:4px"></div>
+        <div class="tb clip"><img src="assets/deal3-c.png" alt="" style="width:112px;height:93px;left:8px;top:-1px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-main">
+    <div class="sec">
+      <h2 class="sec-title" style="padding-top:22px">Available today at Savannah</h2>
+      <div class="avail-grid" id="availGrid"></div>
+    </div>
+    <div class="sec">
+      <h2 class="sec-title">Services at your store</h2>
+      <div class="services">
+        <div class="service"><img src="assets/service-framing.png" alt=""><div class="lbl">Custom framing<img src="assets/arrow-right.svg" alt=""></div></div>
+        <div class="service"><img src="assets/service-printing.png" alt=""><div class="lbl">Custom printing<img src="assets/arrow-right.svg" alt=""></div></div>
+        <div class="service"><img src="assets/service-pickup.png" alt=""><div class="lbl">Store pickup<img src="assets/arrow-right.svg" alt=""></div></div>
+      </div>
+    </div>
+    <div class="sec">
+      <h2 class="sec-title">How-to videos</h2>
+      <div class="videos">
+        <div class="video"><div class="ph"><img src="assets/video-1.png" alt=""><span class="play"><img src="assets/play.svg" alt=""></span></div><div class="cap">Stretching your own canvas</div></div>
+        <div class="video"><div class="ph"><img src="assets/video-2.png" alt=""><span class="play"><img src="assets/play.svg" alt=""></span></div><div class="cap">Choosing the right brush</div></div>
+      </div>
+    </div>
+    <div class="sec">
+      <h2 class="sec-title">Shop by brand</h2>
+      <div class="brands">
+        <div class="brand"><img src="assets/brand-1.png" alt=""></div>
+        <div class="brand"><img src="assets/brand-2.png" alt=""></div>
+        <div class="brand"><img src="assets/brand-3.png" alt=""></div>
+        <div class="brand"><img src="assets/brand-4.png" alt=""></div>
+        <div class="brand cover"><img src="assets/brand-5.png" alt=""></div>
+        <div class="brand"><img src="assets/brand-6.png" alt=""></div>
+      </div>
+    </div>
+    <div class="sec">
+      <h2 class="sec-title">Buy again</h2>
+      <div class="buy-grid">
+        <article class="buy-feat">
+          <div class="ph"><img src="assets/avail-5.png" alt=""></div>
+          <div class="body">
+            <div class="nm">Strathmore 400 Series Bristol Pad,<br>Smooth, 9 × 12 in</div>
+            <div class="pr">$11.39</div>
+            <div class="acts"><button class="btn-red">Add to cart</button><button class="wish" aria-label="Save to wishlist"><img src="assets/heart.svg" alt=""></button></div>
+          </div>
+        </article>
+        <div class="buy"><div class="ph"><img src="assets/buyagain-2.png" alt=""></div><div class="body"><div class="nm">Sakura Pigma Micron Pens, Set of 6</div><div class="pr">$13.99</div></div></div>
+        <div class="buy"><div class="ph"><img src="assets/buyagain-3.png" alt=""></div><div class="body"><div class="nm">Blick Studio Acrylic, Titanium White</div><div class="pr">$5.29</div></div></div>
+        <div class="buy"><div class="ph cover"><img src="assets/buyagain-4.png" alt=""></div><div class="body"><div class="nm">Princeton Velvetouch Round Brush, Size 4</div><div class="pr">$8.99</div></div></div>
+        <div class="buy"><div class="ph"><img src="assets/buyagain-5.png" alt=""></div><div class="body"><div class="nm">Canson XL Mixed Media Pad, 9 × 12 in</div><div class="pr">$9.49</div></div></div>
+        <div class="buy"><div class="ph"><img src="assets/buyagain-6.png" alt=""></div><div class="body"><div class="nm">Prismacolor Premier Colored Pencils, Set of 24</div><div class="pr">$24.99</div></div></div>
+        <div class="buy"><div class="ph"><img src="assets/buyagain-7.png" alt=""></div><div class="body"><div class="nm">General’s Kneaded Eraser</div><div class="pr">$1.49</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="foot-inner">
+      <div class="foot-brand">
+        <div class="foot-logo"><b>BLICK</b><sup>®</sup></div>
+        <div class="socials"><span>IG</span><span>FB</span><span>YT</span><span>PI</span></div>
+      </div>
+      <div class="foot-col"><h4>CUSTOMER SERVICE</h4><a>Contact us</a><a>Order status</a><a>Returns</a></div>
+      <div class="foot-col"><h4>RESOURCES</h4><a>How-to videos</a><a>Lesson plans</a><a>Product guides</a></div>
+      <div class="foot-col"><h4>QUICK LINKS</h4><a>Store locator</a><a>Gift cards</a><a>Student discounts</a></div>
+    </div>
+  </footer>
+</section>
+
+<!-- ================= SEARCH RESULTS ================= -->
+<section class="screen" data-screen="search">
+  <div class="search-page">
+    <aside class="filters" id="filters"></aside>
+    <div class="results">
+      <div class="q">Search: <span class="m">Holbein acrylic gouache</span></div>
+      <div class="sugs"><span class="lb">Other suggestions</span><span class="s">acrylic gouache set</span><span class="s">gouache 12 pc</span><span class="s">holbein watercolor</span><span class="s">gouache brushes</span></div>
+      <div class="rgrid">
+        <a class="rcard best" id="bestMatch">
+          <div class="ph"><img src="assets/sr-set.png" alt=""><span class="tag">Best match</span></div>
+          <div class="inner">
+            <div class="nm">Holbein Acrylic Gouache and Sets</div>
+            <div class="price-row pr"><span class="price-red">$32.99</span><span class="strike">$44.99</span></div>
+            <div class="stu">Your student price</div>
+            <span class="stock">In stock at Savannah · 4 left</span>
+            <div class="ract"><button class="btn-red" data-cart="normal">Add to cart</button><button class="btn-out" data-cart="pickup">Add to pick up</button></div>
+          </div>
+        </a>
+        <div id="srCards" style="display:contents"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRODUCT ================= -->
+<section class="screen" data-screen="product">
+  <div class="pdp"><div class="crumb">Home &gt; Search &gt; Holbein acrylic gouache</div></div>
+  <div class="pdp-main">
+    <div class="pdp-wrap">
+      <h1>Holbein acrylic gouache</h1>
+      <div class="pdp-row">
+        <div class="gallery">
+          <div class="gthumbs">
+            <button class="gthumb" data-variant="set"><img src="assets/pd-thumb1.png" alt=""></button>
+            <button class="gthumb cover"><img src="assets/pd-thumb2.png" alt=""></button>
+            <button class="gthumb"><img src="assets/pd-thumb3.png" alt=""></button>
+            <button class="gthumb" data-variant="individual"><img src="assets/pd-thumb4.png" alt=""></button>
+            <button class="gthumb"><img src="assets/pd-thumb5.png" alt=""></button>
+          </div>
+          <div class="gmain">
+            <div class="gimg">
+              <img id="pdImg" src="assets/pd-main-set.png" alt="">
+              <button class="garrow l" data-step="-1" aria-label="Previous image"><img src="assets/chev-left.svg" alt=""></button>
+              <button class="garrow r" data-step="1" aria-label="Next image"><img src="assets/chev-right.svg" alt=""></button>
+            </div>
+            <div class="dots" id="pdDots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="pinfo">
+          <h2 id="pdName">Acrylic gouache, 12 pc set</h2>
+          <div class="pprice"><span class="big" id="pdPrice">$32.99</span><span class="strike" id="pdList">$44.99</span><span class="save">Save 35% off List</span></div>
+          <ul class="bullets" id="pdBullets"></ul>
+          <div class="variants"><div class="track">
+            <button class="vchip" data-variant="set">12 pc, Assorted Colors</button>
+            <button class="vchip" data-variant="individual">Individual</button>
+            <button class="vchip">5 pc, Primary Colors</button>
+            <button class="vchip">12 pc, Lesson Colors</button>
+            <button class="vchip">12 pc, Rebecca Green Assorted Colors</button>
+            <button class="vchip">18 pc, Assorted Colors</button>
+            <button class="vchip">18 pc, Artists Colors</button>
+            <button class="vchip">24 pc, Assorted Colors</button>
+            <button class="vchip">36 pc, Assorted Colors</button>
+          </div></div>
+          <div class="avail-tags"><span class="chip-sm green">4 available in Savannah</span><span class="chip-sm grey">In stock online</span></div>
+          <div class="ful">
+            <button data-cart="pickup"><span class="k">Pickup</span><span class="d">Today</span><span class="a">2 available</span><span class="p">Free</span></button>
+            <button data-cart="ship"><span class="k">Delivery</span><span class="d">Tomorrow</span><span class="a">9 available</span><span class="p">$9.95</span></button>
+          </div>
+          <div class="pacts"><button class="btn-red" data-cart="normal">Add to cart</button><button class="btn-out" data-cart="pickup">Add to pickup</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="related">
+    <div class="rel-bar">
+      <button class="pill-btn"><img src="assets/filter.svg" alt="">Filters</button>
+      <label class="rel-search"><input placeholder="Search within these"><img src="assets/search-gray.svg" alt=""></label>
+      <button class="pill-loc"><img src="assets/pin-small.svg" alt="">Savannah, GA</button>
+    </div>
+    <div class="rel-grid" id="relGrid"></div>
+  </div>
+</section>
+
+<!-- ================= ARRANGE PICKUP ================= -->
+<section class="screen" data-screen="arrange">
+  <div class="ap-head">
+    <div class="crumb">Home &gt; Cart &gt; Arrange pickup</div>
+    <h1>Arrange your pickup. Pay at the counter when it’s ready</h1>
+    <p>Choose where and when. Pay at the counter when you collect.</p>
+  </div>
+  <div class="ap-body">
+    <div class="ap-row">
+      <div class="ap-card">
+        <div class="ap-h"><b>1</b>Where</div>
+        <button class="where-card" id="whereCard"><div class="in">
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <div class="n">Blick Savannah</div>
+            <div class="l" style="padding-top:4px">318 E Broughton St</div>
+            <div class="l g">Open until 7PM</div>
+            <div class="l mu">0.3 mi away</div>
+            <div class="l g m" style="padding-top:10px" id="apStock">All 3 items in stock</div>
+          </div>
+          <span class="sel">Selected</span>
+        </div></button>
+        <a class="u hot" style="font-size:14px;padding:8px 0">Find another store</a>
+      </div>
+      <div class="ap-card when">
+        <div class="ap-h"><b>2</b>When</div>
+        <div class="slots" id="slots">
+          <button class="slot on"><span class="t">Today</span><span class="s">Ready in 2 hrs</span><span class="soon">Soonest</span></button>
+          <button class="slot"><span class="t">Today</span><span class="s">After 5PM</span></button>
+          <button class="slot"><span class="t">Tomorrow</span><span class="s">Morning</span></button>
+          <button class="slot"><span class="t">Tomorrow</span><span class="s">Afternoon</span></button>
+        </div>
+        <p style="font-size:14px;color:var(--muted)">We hold your order for 24 hours after it's ready.</p>
+      </div>
+    </div>
+    <div class="ap-items">
+      <div class="ap-h"><b>3</b>What we'll pick</div>
+      <div id="apItems"></div>
+    </div>
+  </div>
+  <div class="confirm-bar">
+    <div class="cb-top">
+      <div class="cb-left">Blick Savannah · 318 E Broughton St<br><span id="cbWhen">Ready today, about 2 hours</span><br>Bring your student ID</div>
+      <div class="cb-right"><span class="k">You'll pay at the counter</span><span class="v" id="cbTotal">$54.29</span><span class="r">Your student price applied</span></div>
+    </div>
+    <div class="cb-acts"><button class="btn-out" data-go="search">Keep shopping</button><button class="btn-red" id="confirmPickup">Confirm pickup</button></div>
+    <div class="cb-fine"><span>No minimum order</span><i></i><span>Nothing is charged now</span><i></i><span>Cancel any time before pickup</span></div>
+  </div>
+</section>
+
+<!-- ================= PICKUP STATUS ================= -->
+<section class="screen" data-screen="status">
+  <div class="status" id="statusHero">
+    <img id="statusIcon" src="assets/clock-white.svg" alt="">
+    <h1 id="statusTitle">We're picking your order</h1>
+    <p id="statusSub">Ready today, around 3PM. We'll email you when it's at the counter.</p>
+    <div class="hrs"><b>2</b><span>hours left</span></div>
+  </div>
+  <div class="progress">
+    <div class="prog">
+      <div class="ln ln1"></div><div class="ln ln2"></div>
+      <div class="step"><span class="t">Ordered</span><span class="d"><i></i></span><span class="tm">2:14 PM</span></div>
+      <div class="step"><span class="t" id="stepMid">Collecting</span><span class="d"><i></i></span><span class="tm">2:31 PM</span></div>
+      <div class="step pend"><span class="t">Ready for Pickup</span><span class="d"><i></i></span><span class="tm">3:05 PM</span></div>
+    </div>
+  </div>
+  <div class="collect">
+    <div class="mapwrap"><img class="map" src="assets/pickup-map.png" alt="">
+      <img class="pin" src="assets/pickup-pin.svg" alt="">
+      <div class="zm"><span>+</span><span>−</span></div></div>
+    <div class="info">
+      <h2>Blick Savannah</h2>
+      <div class="a">318 E Broughton St</div>
+      <div class="o">Open until 7PM</div>
+      <div class="w">0.3 mi · 6 min walk</div>
+      <button class="btn-red">Get directions</button>
+      <button class="btn-out">Change store</button>
+    </div>
+  </div>
+  <div class="counter">
+    <h2>At the counter</h2>
+    <div class="cols">
+      <div class="col"><b>#4417</b><span>Order number</span></div>
+      <div class="col"><b id="counterTotal">$54.29</b><span>Pay at counter</span></div>
+    </div>
+  </div>
+  <div class="items-bar"><div><span id="itemsWaiting">1 item picked and waiting</span><span class="vi">View items</span><img src="assets/chevron-down.svg" alt=""></div></div>
+  <div class="fine">Store pickup takes up to 24 hours to confirm, has a $35 minimum, can only be paid for in store with an ID, and allows no returns.</div>
+</section>
+
+<!-- ================= EMAIL ================= -->
+<section class="screen" data-screen="email">
+  <div class="mail-top">
+    <span class="apps"><img src="assets/mail-apps.svg" alt=""></span>
+    <img class="logo" src="assets/mail-logo.png" alt="">
+    <label class="mail-search"><img src="assets/mail-search.svg" alt=""><input placeholder="Search mail"></label>
+    <div class="rt"><span><img src="assets/mail-settings.svg" alt=""></span><span><img src="assets/mail-account.svg" alt=""></span></div>
+  </div>
+  <div class="mail-tools">
+    <span class="new"><img src="assets/mail-new.svg" alt="">New message</span><span class="dv pad"></span>
+    <span class="tb"><img src="assets/mail-delete.svg" alt=""></span><span class="dv"></span>
+    <span class="tb"><img src="assets/mail-archive.svg" alt=""></span><span class="dv"></span>
+    <span class="tb"><img src="assets/mail-flag.svg" alt=""></span><span class="dv"></span>
+    <span class="tb"><img src="assets/mail-reply.svg" alt=""></span><span class="dv"></span>
+    <span class="tb"><img class="w" src="assets/mail-replyall.svg" alt=""></span><span class="dv"></span>
+    <span class="tb"><img src="assets/mail-forward.svg" alt=""></span>
+  </div>
+  <div class="mail-body">
+    <nav class="folders">
+      <div class="eyebrow">Favorites</div>
+      <div class="grp pb">
+        <a class="on"><img src="assets/f-inbox.svg" alt=""><span>Inbox</span><em>897</em></a>
+        <a><img src="assets/f-sent.svg" alt=""><span>Sent</span></a>
+        <a><img src="assets/f-drafts.svg" alt=""><span>Drafts</span><em>25</em></a>
+        <a><img src="assets/f-archive.svg" alt=""><span>Archive</span><em>2</em></a>
+      </div>
+      <hr>
+      <div class="eyebrow pt">Folders</div>
+      <div class="grp">
+        <a><img src="assets/f-deleted.svg" alt=""><span>Deleted</span></a>
+        <a><img src="assets/f-junk.svg" alt=""><span>Junk</span></a>
+      </div>
+    </nav>
+    <div class="msgs">
+      <div class="mh">Focused<span class="ic"><span><img src="assets/mail-filter.svg" alt=""></span><span><img src="assets/mail-sort.svg" alt=""></span></span></div>
+      <div class="msg on"><span class="av"><img src="assets/mail-blick-avatar.png" alt=""></span><div class="c"><div class="fr">Blick Art Materials<span>12:36</span></div><div class="sb">Your order #4417 is ready at Savannah</div><div class="pv">Pick up by tomorrow, 7PM. Nothing is charged until you collect.</div></div></div>
+      <div class="msg"><span class="av"></span><div class="c"><div class="fr">Sender name<span>11:52</span></div><div class="sb">Subject line</div><div class="pv">Preview text of the message…</div></div></div>
+      <div class="msg"><span class="av"></span><div class="c"><div class="fr">Sender name<span>09:14</span></div><div class="sb">Subject line</div><div class="pv">Preview text of the message…</div></div></div>
+      <div class="msg"><span class="av"></span><div class="c"><div class="fr">Sender name<span>Yesterday</span></div><div class="sb">Subject line</div><div class="pv">Preview text of the message…</div></div></div>
+      <div class="msg"><span class="av"></span><div class="c"><div class="fr">Sender name<span>Sat</span></div><div class="sb">Subject line</div><div class="pv">Preview text of the message…</div></div></div>
+    </div>
+    <main class="read">
+      <h1>Your order #4417 is ready at Savannah</h1>
+      <div class="sender"><span class="av">BA</span>
+        <div class="who"><span class="m">Blick Art Materials</span> <span style="color:var(--muted)">&lt;pickup@dickblick.com&gt;</span><div class="to">To: Katie M.</div></div>
+        <span class="dt">Mon 19 Oct, 12:36</span></div>
+      <hr>
+      <div class="ticket-wrap">
+        <div class="ticket-hd"><div class="r1"><img src="assets/check-white-sm.svg" alt="">Ready for pickup</div><div class="r2">Hold expires tomorrow, 7PM</div></div>
+        <div class="ticket">
+          <div class="tk-brand"><b>BLICK</b><p>Savannah · 318 E Broughton St</p></div>
+          <div class="tk-qr"><div class="qr"><img src="assets/qr.png" alt="Pickup QR code"></div><div class="sc">Scan at the counter</div><div class="no">#4417</div></div>
+          <div class="tk-perf"><span class="ln"></span><span class="nt l"></span><span class="nt r"></span></div>
+          <div class="tk-desc">
+            <div class="tk-name"><span class="k">Name</span><span class="v">Katie M.</span></div>
+            <div class="tk-boxes"><div><div class="k">Bring</div><div class="v">Student ID</div></div><div><div class="k">Pay at counter</div><div class="v" id="mailTotal">$54.29</div></div></div>
+          </div>
+          <div class="tk-cta"><a class="hot">Get directions</a></div>
+          <div class="tk-link"><a class="hot" id="mailItems">View the 2 items</a></div>
+        </div>
+        <div class="mail-fine">Nothing is charged until you collect.</div>
+        <div class="mail-ft">You're receiving this because you placed a pickup order at Blick Savannah.<br><a>Manage notifications</a> · <a>Unsubscribe</a></div>
+      </div>
+    </main>
+  </div>
+</section>
+
+<!-- ================= CART DRAWER ================= -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <div class="dr-head"><img src="assets/check-circle.svg" alt=""><h2>Added to your cart</h2></div>
+  <button class="dr-close" data-close-cart aria-label="Close"><img src="assets/close.svg" alt=""></button>
+  <div id="drItems"></div>
+  <div class="dr-sec how" id="drHow">
+    <h3>How do you want it?</h3>
+    <div class="radios">
+      <button class="radio" data-mode="ship"><span class="dot"></span><span class="txt"><span class="t">Ship it</span><span class="s">Arrives in 2–7 business days</span></span><span class="rt"><span>+$9.95 shipping</span><span class="s">Free over $79</span></span></button>
+      <button class="radio" data-mode="pickup"><span class="dot"></span><span class="txt"><span class="t">Pick up today at Savannah</span><span class="s g">Ready in about 2 hours</span><span class="s">4 left · 318 E Broughton St</span></span><span class="rt"><span>Free</span></span></button>
+    </div>
+  </div>
+  <div class="dr-sec sum" id="drSum"></div>
+  <div class="dr-foot" id="drFoot"></div>
+</aside>
+
+<!-- ================= TOAST ================= -->
+<div class="toast" id="toast" role="alert">
+  <div class="card">
+    <div class="top">
+      <div class="logo">BLICK</div>
+      <div class="txt">
+        <div class="from">Blick Art Materials<span>now</span></div>
+        <div class="ttl">Your order #4417 is ready</div>
+        <div class="msg">Pick up today at Savannah, 318 E Broughton St. Hold expires tomorrow, 7PM.</div>
+      </div>
+    </div>
+    <div class="acts"><button class="v" id="viewOrder">View order</button><button class="l" data-close-toast>Later</button></div>
+  </div>
+  <button class="dismiss" data-close-toast aria-label="Dismiss notification"><img src="assets/toast-x.svg" alt=""></button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

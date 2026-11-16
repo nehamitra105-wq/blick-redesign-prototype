@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Button - Zoom in">
+<rect x="0.5" y="0.5" width="35" height="35" rx="17.5" fill="white"/>
+<rect x="0.5" y="0.5" width="35" height="35" rx="17.5" stroke="#E0E0E0"/>
+<path id="+" d="M18.612 17.388H22.536V18.612H18.612V22.554H17.388V18.612H13.464V17.388H17.388V13.446H18.612V17.388Z" fill="#111111"/>
+</g>
+</svg>
